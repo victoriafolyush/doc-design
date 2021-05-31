@@ -23,12 +23,7 @@ const db = {};
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
-db.texts = require("./text_model.js")(sequelize, Sequelize);
-
-// db.tutorials.hasMany(db.comments, { as: "comments" });
-// db.comments.belongsTo(db.tutorials, {
-//   foreignKey: "tutorialId",
-//   as: "tutorial",
-// });
+db.texts = require("./text.model.js")(sequelize, Sequelize);
+db.stories = require("./story.model.js")(sequelize, Sequelize);
 
 module.exports = db;
