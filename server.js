@@ -20,33 +20,13 @@ app.use(bodyParser.json());
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }));
 
-const run = async () => {
-  const story1 = await controllerstory.createStory({
-    isSponsored: true,
-    isCloseFriends: false,
-  });
-
-  const text1 = await controllertext.createText(story1.id, {
-    value: "bezkoder",
-    font: "Good job!",
-  });
-};
-
-db.sequelize.sync({ force: false }).then(() => {
-  // console.log("Drop and re-sync db.");
-  // run();
-});
-
 // simple route
 app.get("/", (req, res) => {
   res.json({ message: "Welcome to bezkoder application." });
 });
 
-// require("./app/routes/turorial.routes")(app);
-require("./app/routes/text.routes.js")(app);
-require("./app/routes/story.routes.js")(app);
-
-
+require("./app/routes/text.routes")(app);
+require("./app/routes/story.routes")(app);
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
