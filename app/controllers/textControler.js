@@ -36,3 +36,80 @@ exports.findAllTexts = (req, res) => {
       });
     });
 };
+
+exports.findOneText = (req, res) => {
+  const id = req.params.id;
+
+  Text.findByPk(id)
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: "Error retrieving Text with id=" + id
+      });
+    });
+};
+
+exports.updateText = (req, res) => {
+  const id = req.params.id;
+
+  Text.update(req.body, {
+    where: { id: id }
+  })
+    .then(num => {
+      if (num == 1) {
+        res.send({
+          message: "Text was updated successfully."
+        });
+      } else {
+        res.send({
+          message: `Cannot update Text with id=${id}. Maybe Text was not found or req.body is empty!`
+        });
+      }
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: "Error updating Text with id=" + id
+      });
+    });
+};
+
+exports.deleteOneText = (req, res) => {
+  const id = req.params.id;
+
+  Text.destroy({
+    where: { id: id }
+  })
+    .then(num => {
+      if (num == 1) {
+        res.send({
+          message: "Text was deleted successfully!"
+        });
+      } else {
+        res.send({
+          message: `Cannot delete Text with id=${id}. Maybe Text was not found!`
+        });
+      }
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: "Could not delete Text with id=" + id
+      });
+    });
+};
+exports.deleteAllTexts = (req, res) => {
+  Text.destroy({
+    where: {},
+    truncate: false
+  })
+    .then(nums => {
+      res.send({ message: `${nums} Texts were deleted successfully!` });
+    })
+    .catch(err => {
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while removing all Texts."
+      });
+    });
+};
