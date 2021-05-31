@@ -1,7 +1,6 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-const db = require("./app/models");
 const controllertext = require("./app/controllers/textControler");
 const controllerstory = require("./app/controllers/story.controller");
 
@@ -20,10 +19,18 @@ app.use(bodyParser.json());
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }));
 
+const db = require("./app/models");
+db.sequelize.sync({ force: true }).then(() => {
+  console.log("Drop and re-sync db.");
+});
+
+
 // simple route
 app.get("/", (req, res) => {
   res.json({ message: "Welcome to bezkoder application." });
 });
+
+
 
 require("./app/routes/text.routes")(app);
 require("./app/routes/story.routes")(app);

@@ -67,4 +67,3 @@ let csvStream1 = fastcsv
   stream1.pipe(csvStream1);
 
   stream2.pipe(csvStream2);
-
