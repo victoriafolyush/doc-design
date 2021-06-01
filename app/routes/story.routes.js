@@ -3,17 +3,17 @@ module.exports = app => {
   
     var router = require("express").Router();
   
-    router.post("/", story.createStory);
+    router.post("/add", story.createStory);
   
     router.get("/", story.findAllStories);
 
     router.get("/:id", story.findOneStory);
 
-    router.put("/:id", story.updateStory);
+    router.put("/update/:id", story.updateStory);
 
-    router.delete("/:id", story.deleteOneStory);
+    router.delete("delete/:id", story.deleteOneStory);
 
-    router.delete("/", story.deleteAllStories);
+    router.delete("/delete", story.deleteAllStories);
 
     app.use('/api/stories', router);
   };

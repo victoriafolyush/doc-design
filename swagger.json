@@ -1,0 +1,188 @@
+{
+    "swagger": "2.0",
+    "info": {
+      "version": "1.0.0", 
+      "title": "My User Project CRUD",
+      "description": "My User Project Application API",
+      "license": {
+        "name": "MIT",
+        "url": "https://opensource.org/licenses/MIT"
+      }
+    },
+    "host": "localhost:8080",
+    "basePath": "/",
+    "tags": [
+      {
+        "name": "Stories",
+        "description": "API for stories in the system"
+      }
+    ],
+    "schemes": ["http"],
+    "consumes": ["application/json"],
+    "produces": ["application/json"],
+
+    "paths": {
+        "/api/stories": {
+          "get": {
+            "tags": ["Stories"],
+            "summary": "Get all stories in system",
+            "responses": {
+              "200": {
+                "description": "OK",
+                "schema": {
+                  "$ref": "#/definitions/Story"
+                }
+              }
+            }
+          }
+        },
+        "/api/stories/{id}": {
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "description": "ID of story that we want to find",
+              "type": "integer"
+            }
+          ],
+          "get": {
+            "tags": ["Stories"],
+            "summary": "Get story with given ID",
+            "responses": {
+              "200": {
+                "description": "OK",
+                "schema": {
+                  "$ref": "#/definitions/Story"
+                }
+              }
+            }
+          }
+        },
+        "/api/stories/add": {
+          "post": {
+            "tags": ["Stories"],
+            "description": "Create new story in system",
+            "parameters": [
+              {
+                "name": "story",
+                "in": "body",
+                "description": "Story that we want to create",
+                "schema": {
+                  "$ref": "#/definitions/Story"
+                }
+              }
+            ],
+            "produces": ["application/json"],
+            "responses": {
+              "200": {
+                "description": "New story is created",
+                "schema": {
+                  "$ref": "#/definitions/Story"
+                }
+              }
+            }
+          }
+        },
+        "/api/stories/update/{id}": {
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "description": "ID of story that we want to find",
+              "type": "integer"
+            }
+          ],
+          "put": {
+            "summary": "Update story with given ID",
+            "tags": ["Stories"],
+            "parameters": [
+              {
+                "name": "story",
+                "in": "body",
+                "description": "Story with new values of properties",
+                "schema": {
+                  "$ref": "#/definitions/updateStory"
+                }
+              }
+            ],
+            "responses": {
+              "200": {
+                "description": "Story is updated",
+                "schema": {
+                  "$ref": "#/definitions/Story"
+                }
+              }
+            }
+          }
+      },
+      "/api/stories/delete/{id}": {
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID of story that we want to delete",
+            "type": "integer"
+          }
+        ],
+        "delete": {
+          "summary": "Delete story with given ID",
+          "tags": ["Stories"],
+          "responses": {
+            "200": {
+              "description": "Story is deleted",
+              "schema": {
+                "$ref": "#/definitions/Story"
+              }
+            }
+          }
+        }
+      },
+      "/api/stories/delete": {
+        "delete": {
+          "summary": "Delete all stories",
+          "tags": ["Stories"],
+          "responses": {
+            "200": {
+              "description": "All stories are deleted",
+              "schema": {
+                "$ref": "#/definitions/Story"
+              }
+            }
+          }
+        }
+      }
+    },
+    "definitions": {
+      "Story": {
+        "properties": {
+          "_id": {
+            "type": "integer",
+            "uniqueItems": true
+          },
+          "isSponsored": {
+            "type": "boolean"
+          },
+          "isCloseFriends": {
+            "type": "boolean"
+          }
+          
+        }
+      },
+      "updateStory": {
+        "properties": {
+          "isSponsored": {
+            "type": "boolean"
+          },
+          "isCloseFriends": {
+            "type": "boolean"
+          }
+        }
+      }
+    }  
+  }
+
+
+  

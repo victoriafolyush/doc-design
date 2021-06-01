@@ -1,10 +1,6 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-const controllertext = require("./app/controllers/textControler");
-const controllerstory = require("./app/controllers/story.controller");
-
-
 const app = express();
 
 var corsOptions = {
@@ -24,17 +20,23 @@ db.sequelize.sync({ force: false }).then(() => {
   // console.log("Drop and re-sync db.");
 });
 
+const swaggerUi = require('swagger-ui-express'),
+swaggerDocument = require('./swagger.json');
 
 // simple route
 app.get("/", (req, res) => {
-  res.json({ message: "Welcome to bezkoder application." });
+  res.json({ message: "Welcome to lab3 application." });
 });
-
-
 
 require("./app/routes/text.routes")(app);
 require("./app/routes/story.routes")(app);
-// set port, listen for requests
+// set port, listen for requests\
+app.use(
+  '/api-docs',
+  swaggerUi.serve, 
+  swaggerUi.setup(swaggerDocument)
+);
+
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);
