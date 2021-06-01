@@ -3,17 +3,17 @@ module.exports = app => {
 
     var router = require("express").Router();
   
-    router.post("/", text.createText);
+    router.post("/add", text.createText);
   
     router.get("/", text.findAllTexts);
 
     router.get("/:id", text.findOneText);
 
-    router.put("/:id", text.updateText);
+    router.put("/update/:id", text.updateText);
 
-    router.delete("/:id", text.deleteOneText);
+    router.delete("/delete/:id", text.deleteOneText);
 
-    router.delete("/", text.deleteAllTexts);
+    router.delete("/delete", text.deleteAllTexts);
 
     app.use('/api/texts', router);
   };

@@ -153,7 +153,139 @@
             }
           }
         }
+      },
+      "/api/texts": {
+        "get": {
+          "tags": ["Texts"],
+          "summary": "Get all texts in system",
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/definitions/Text"
+              }
+            }
+          }
+        }
+      },
+      "/api/texts/{id}": {
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID of text that we want to find",
+            "type": "integer"
+          }
+        ],
+        "get": {
+          "tags": ["Texts"],
+          "summary": "Get text with given ID",
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/definitions/Text"
+              }
+            }
+          }
+        }
+      },
+      "/api/texts/add": {
+        "post": {
+          "tags": ["Texts"],
+          "description": "Create new text in system",
+          "parameters": [
+            {
+              "name": "text",
+              "in": "body",
+              "description": "Text that we want to create",
+              "schema": {
+                "$ref": "#/definitions/Text"
+              }
+            }
+          ],
+          "produces": ["application/json"],
+          "responses": {
+            "200": {
+              "description": "New text is created",
+              "schema": {
+                "$ref": "#/definitions/Text"
+              }
+            }
+          }
+        }
+      },
+      "/api/texts/update/{id}": {
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID of text that we want to find",
+            "type": "integer"
+          }
+        ],
+        "put": {
+          "summary": "Update text with given ID",
+          "tags": ["Texts"],
+          "parameters": [
+            {
+              "name": "text",
+              "in": "body",
+              "description": "Text with new values of properties",
+              "schema": {
+                "$ref": "#/definitions/updateText"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Text is updated",
+              "schema": {
+                "$ref": "#/definitions/Text"
+              }
+            }
+          }
+        }
+    },
+    "/api/texts/delete/{id}": {
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "description": "ID of text that we want to delete",
+          "type": "integer"
+        }
+      ],
+      "delete": {
+        "summary": "Delete text with given ID",
+        "tags": ["Texts"],
+        "responses": {
+          "200": {
+            "description": "Text is deleted",
+            "schema": {
+              "$ref": "#/definitions/Text"
+            }
+          }
+        }
       }
+    },
+    "/api/texts/delete": {
+      "delete": {
+        "summary": "Delete all texts",
+        "tags": ["Texts"],
+        "responses": {
+          "200": {
+            "description": "All texts are deleted",
+            "schema": {
+              "$ref": "#/definitions/Text"
+            }
+          }
+        }
+      }
+    }
     },
     "definitions": {
       "Story": {
@@ -178,6 +310,36 @@
           },
           "isCloseFriends": {
             "type": "boolean"
+          }
+        }
+      },
+      "Text": {
+        "properties": {
+          "_id": {
+            "type": "integer",
+            "uniqueItems": true
+          },
+          "value": {
+            "type": "string"
+          },
+          "font": {
+            "type": "string"
+          },
+          "storyId": {
+            "type": "integer"
+          }
+        }
+      },
+      "updateText": {
+        "properties": {
+          "value": {
+            "type": "string"
+          },
+          "font": {
+            "type": "string"
+          },
+          "storyId": {
+            "type": "integer"
           }
         }
       }
